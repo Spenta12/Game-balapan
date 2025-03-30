@@ -1,0 +1,45 @@
+#/!bin/bash
+
+# Game balap-balap ala ane
+
+track_length=60
+player_pos=0
+ai_pos=0
+speed=1
+
+echo "yoo mat datang di game balapan ala spenta!"
+echo "pake tombol 'd' yaa buat maju, and yang pertama nyampe dia menangg!"
+echo "btw, kamu tuh player nya yang 'p' yahh"
+echo "--- START ---"
+
+while  [[ $player_pos -lt track_length && ai_pos -lt $track_length ]]; do
+    echo -ne "\r"
+
+    # nampilin track nya
+    for ((i=0; i<$track_length; i++)); do
+        if [[ $i -eq $player_pos ]]; then
+            echo -ne "P"  #Player
+        elif [[ $i -eq $ai_pos ]]; then
+            echo -ne "A"  #AI
+        else
+            echo -ne "-"
+        fi
+    done
+
+    echo -ne " "  # Spasi buat tampilan nya lebih rapi :v
+    read -n1 -s input
+
+    if [[ $input == "d" ]]; then
+        ((player_pos+=speed))
+    fi
+
+    ((ai_pos+=RANDOM%2))
+
+done
+
+echo -e "\n--- Finish ---"
+if [[ $player_pos -ge $track_length ]]; then
+    echo "Good job! kamu menang, anjay!"
+elif [[ $ai_pos -ge $track_length ]]; then
+    echo "Yahh, kamu kalah, yokk coba lagi!"
+fi
